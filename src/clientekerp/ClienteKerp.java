@@ -5,6 +5,7 @@
 package clientekerp;
 
 
+
 /**
  *
  * @author Christian
@@ -16,6 +17,8 @@ public class ClienteKerp {
      */
     public static void main(String[] args) {
         
+        
+   
         VisorClientKerp ventana = new VisorClientKerp();
         ventana.setVisible(true);
         

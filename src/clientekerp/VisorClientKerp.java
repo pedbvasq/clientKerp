@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.Timer;
 
 /**
@@ -32,6 +33,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
         ImageIcon  log2 = new javax.swing.ImageIcon(getClass().getResource("/img/logo2.jpg"));
         Icon icon2 = new ImageIcon(log2.getImage().getScaledInstance(logo2.getWidth(),logo2.getHeight(),Image.SCALE_DEFAULT));
         logo2.setIcon(icon2);
+       tableClient.setDefaultRenderer(Object.class, new TableRender());
 //        for(int i = 1; i<4 ;i++){
 //            System.out.println();
 //            imagen[i] = new ImageIcon(getClass().getResource("/img/messi"+i+".png"));
@@ -54,7 +56,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
        });
         timer.start();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,7 +69,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableClient = new javax.swing.JTable();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -97,8 +99,9 @@ public class VisorClientKerp extends javax.swing.JFrame {
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Ejm", "1", "2", null, "3", "4"},
                 {"Ejm2", "1", "1", "2", "4", "5"},
@@ -115,9 +118,17 @@ public class VisorClientKerp extends javax.swing.JFrame {
                 "Nombre", "Title 2", "Cantidad", "Des", "IVA", "Total"
             }
         ));
-        jTable1.setCellSelectionEnabled(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tableClient.setCellSelectionEnabled(true);
+        jScrollPane1.setViewportView(tableClient);
+        tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tableClient.getColumnModel().getColumnCount() > 0) {
+            tableClient.getColumnModel().getColumn(0).setHeaderValue("Nombre");
+            tableClient.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            tableClient.getColumnModel().getColumn(2).setHeaderValue("Cantidad");
+            tableClient.getColumnModel().getColumn(3).setHeaderValue("Des");
+            tableClient.getColumnModel().getColumn(4).setHeaderValue("IVA");
+            tableClient.getColumnModel().getColumn(5).setHeaderValue("Total");
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -263,6 +274,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
 
         btnIzq.getAccessibleContext().setAccessibleName("");
 
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel1.setText("Cliente");
 
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -356,14 +368,14 @@ public class VisorClientKerp extends javax.swing.JFrame {
                                 .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(325, 325, 325))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(280, 280, 280))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -420,6 +432,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
           
         
     }//GEN-LAST:event_btnIzqActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -483,10 +496,10 @@ public class VisorClientKerp extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
+    private javax.swing.JTable tableClient;
     // End of variables declaration//GEN-END:variables
 
   
