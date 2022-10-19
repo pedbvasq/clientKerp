@@ -6,6 +6,7 @@ package clientekerp;
 
 
 
+
 /**
  *
  * @author Christian
@@ -14,16 +15,17 @@ public class ClienteKerp {
 
     /**
      * @param args the command line arguments
-     */
+ 
+ */
+    
+
+
     public static void main(String[] args) {
         
         
    
         VisorClientKerp ventana = new VisorClientKerp();
         ventana.setVisible(true);
-        
-        
-     
         
     }
     

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World with Socketx</title>
+</head>
+
+<body>
+   <h1>cliente</h1>
+   <button onclick="sendMess()">send msg</button>
+</body>
+
+<script>
+    const socket = new  WebSocket('ws://localhost:3000')
+    socket.addEventListener('open',function(event){
+        console.log('conectado');
+    })
+    socket.addEventListener('message', function (event) {
+            console.log('mensaje del server',event.data);
+        })
+    const sendMess = ()=>{
+        socket.send('hello from client')
+    }
+</script>
+
+</html>
