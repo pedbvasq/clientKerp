@@ -7,16 +7,21 @@ const wss = new WebSocket.Server({ server: server });
 app.use(express.static(path.join(__dirname, "./public")));
 
 wss.on("connection", function connection(ws) {
-  console.log("new cliente");
-  ws.send("new client");
+  console.log("new cliente connect");
+  ws.send(
+    JSON.stringify({
+      x: 254,
+      y: 100,
+    })
+  );
 
   ws.on("message", function incoming(message) {
-    console.log("recibido" + message);
+    console.log("recibido por el servidor : " + message);
     ws.send("got " + message);
   });
 });
 
-app.get("/", (req, res) => res.send("hello world"));
+app.get("/");
 server.listen(3000, () => {
   console.log("port 3000");
 });
