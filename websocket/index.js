@@ -5,6 +5,7 @@ const server = require("http").createServer(app);
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server: server });
 const fs = require("fs");
+
 app.use(express.static(path.join(__dirname, "./public")));
 
 wss.on("connection", function connection(ws) {

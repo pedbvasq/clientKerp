@@ -10,6 +10,7 @@ package webSocket;
  *
  * @author Christian
  */
+  
 public class Client {
    
 

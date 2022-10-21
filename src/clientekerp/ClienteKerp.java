@@ -1,64 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package clientekerp;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.WebSocket;
-import java.util.concurrent.CompletionStage;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
-import javax.servlet.http.HttpServlet;
-import java.io.*;
-import java.net.*;
+package clientekerp;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.ContainerProvider;
+import javax.websocket.OnMessage;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+
+
 /**
  *
  * @author Christian
  */
+
+@ClientEndpoint
 public class ClienteKerp {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-  
-   String hostName = "localhost";
-   int portNumber = 3000;
-
-        try (
-                
-            Socket echoSocket = new Socket(hostName, portNumber);
-            PrintWriter out =
-                new PrintWriter(echoSocket.getOutputStream(), true);
-            BufferedReader in =
-                new BufferedReader(
-                    new InputStreamReader(echoSocket.getInputStream()));
-            BufferedReader stdIn =
-                new BufferedReader(
-                    new InputStreamReader(System.in))
-        ) {
-            String userInput;
-            while ((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
-                System.out.println("echo: " + in.readLine());
-            }
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
-                hostName);
-            System.exit(1);
-        } 
-
-    }
-    
-
-
-    
+   private static Object waitLock = new Object();
+@OnMessage
+public void onMessage(String message) {
+    //the new USD rate arrives from the websocket server side.
+    System.out.println("Received msg: " + message);
 }
+private static void wait4TerminateSignal() {
+    synchronized(waitLock) {
+        try {
+            waitLock.wait();
+        } catch (InterruptedException e) {}
+    }
+}
+    public static void main(String[] args)  {
+        WebSocketContainer container = null; //
+        Session session = null;
+    try {
+        //Tyrus is plugged via ServiceLoader API. See notes above
+        container = ContainerProvider.getWebSocketContainer();
+        //WS1 is the context-root of my web.app 
+        //ratesrv is the  path given in the ServerEndPoint annotation on server implementation
+        session = container.connectToServer(ClienteKerp.class, URI.create("ws://localhost:3000/"));
+        wait4TerminateSignal();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null) {
+            try {
+                session.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
+    }
+        
+  
+}
+    }}
