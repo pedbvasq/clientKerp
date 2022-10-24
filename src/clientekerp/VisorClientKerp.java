@@ -4,9 +4,14 @@
  */
 package clientekerp;
 
+import static clientekerp.WebSocket.cliente;
+import com.google.gson.Gson;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -16,18 +21,24 @@ import javax.swing.Timer;
  *
  * @author Christian
  */
-public class VisorClientKerp extends javax.swing.JFrame {
+public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
 
     /**
      * Creates new form clientKerp
      */
  
  int cont = 1;
+ private Cliente cl ;
 
     public VisorClientKerp() {
+  
         
      //LOGOS   
         initComponents();
+     
+    
+
+        
         ImageIcon  log1 = new javax.swing.ImageIcon(getClass().getResource("/img/logo1.png"));
         Icon icon1 = new ImageIcon(log1.getImage().getScaledInstance(logo1.getWidth(),logo1.getHeight(),Image.SCALE_DEFAULT));
         logo1.setIcon(icon1);
@@ -36,6 +47,13 @@ public class VisorClientKerp extends javax.swing.JFrame {
         Icon icon2 = new ImageIcon(log2.getImage().getScaledInstance(logo2.getWidth(),logo2.getHeight(),Image.SCALE_DEFAULT));
         logo2.setIcon(icon2);
        tableClient.setDefaultRenderer(Object.class, new TableRender());
+       
+       //card
+      
+
+       
+
+       
     //BOTONES
         Timer timer = new Timer(5000,new ActionListener(){
            public void actionPerformed(ActionEvent e ){
@@ -59,6 +77,7 @@ public class VisorClientKerp extends javax.swing.JFrame {
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel17 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableClient = new javax.swing.JTable();
@@ -72,6 +91,10 @@ public class VisorClientKerp extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        direccion = new javax.swing.JLabel();
+        correo = new javax.swing.JLabel();
+        nombre = new javax.swing.JLabel();
+        cedula = new javax.swing.JLabel();
         jLayeredPane4 = new javax.swing.JLayeredPane();
         img = new javax.swing.JLabel();
         btnDer = new javax.swing.JToggleButton();
@@ -87,8 +110,11 @@ public class VisorClientKerp extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         logo2 = new javax.swing.JLabel();
         logo1 = new javax.swing.JLabel();
+        prueba = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
+
+        jLabel17.setText("....");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -155,6 +181,10 @@ public class VisorClientKerp extends javax.swing.JFrame {
         jLayeredPane3.setLayer(jSeparator3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jSeparator4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jSeparator5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(direccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(correo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane3.setLayer(cedula, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
         jLayeredPane3.setLayout(jLayeredPane3Layout);
@@ -170,8 +200,14 @@ public class VisorClientKerp extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane3Layout.createSequentialGroup()
                         .addContainerGap(19, Short.MAX_VALUE)
                         .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
+                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(26, 26, 26)
+                                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jLayeredPane3Layout.createSequentialGroup()
                                 .addGap(61, 61, 61)
                                 .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -182,12 +218,19 @@ public class VisorClientKerp extends javax.swing.JFrame {
                         .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLayeredPane3Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jLayeredPane3Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator1)))))
                 .addGap(19, 19, 19))
+            .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane3Layout.createSequentialGroup()
+                    .addContainerGap(96, Short.MAX_VALUE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(73, 73, 73)))
         );
         jLayeredPane3Layout.setVerticalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +238,9 @@ public class VisorClientKerp extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(direccion))
                 .addGap(1, 1, 1)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
@@ -203,14 +248,23 @@ public class VisorClientKerp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cedula))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(jLabel5)
+                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(correo))
                 .addGap(1, 1, 1)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
+            .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                    .addGap(85, 85, 85)
+                    .addComponent(nombre)
+                    .addContainerGap(137, Short.MAX_VALUE)))
         );
 
         jLayeredPane4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -335,6 +389,8 @@ public class VisorClientKerp extends javax.swing.JFrame {
         logo1.setText("jLabel14");
         logo1.setBorder(new javax.swing.border.MatteBorder(null));
 
+        prueba.setText("jLabel14");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -353,7 +409,9 @@ public class VisorClientKerp extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(211, 211, 211)
+                                .addGap(60, 60, 60)
+                                .addComponent(prueba)
+                                .addGap(103, 103, 103)
                                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -374,8 +432,13 @@ public class VisorClientKerp extends javax.swing.JFrame {
                         .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(prueba))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -456,6 +519,8 @@ public class VisorClientKerp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+              
                 new VisorClientKerp().setVisible(true);
             }
         });
@@ -471,12 +536,16 @@ public class VisorClientKerp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnDer;
     private javax.swing.JToggleButton btnIzq;
+    private javax.swing.JLabel cedula;
+    private javax.swing.JLabel correo;
+    private javax.swing.JLabel direccion;
     private javax.swing.JLabel img;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -497,8 +566,32 @@ public class VisorClientKerp extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
+    private javax.swing.JLabel nombre;
+    private javax.swing.JLabel prueba;
     private javax.swing.JTable tableClient;
     // End of variables declaration//GEN-END:variables
+
+ 
+    public void fillCard(){
+
+    }
+
+    @Override
+    public void run() {
+     try {
+         Thread.sleep(3000);
+     } catch (InterruptedException ex) {
+         Logger.getLogger(VisorClientKerp.class.getName()).log(Level.SEVERE, null, ex);
+     }
+       String json = WebSocket.getJson();
+        cliente = new Gson().fromJson(json, Cliente.class);
+        prueba.setText(cliente.getDireccion());
+        correo.setText(cliente.getCorreo());
+        cedula.setText(cliente.getCedulaRuc());
+        nombre.setText(cliente.getNombre());
+   
+        System.out.println(cliente.getNombre());
+    }
 
   
 
