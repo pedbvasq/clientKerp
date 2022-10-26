@@ -12,17 +12,17 @@ import javax.websocket.ClientEndpoint;
 public class ClienteKerp  {
 
     public static void main(String[] args)  {
-             
+        
+    
         WebSocket connection = new WebSocket();
         Thread fill = new Thread(new VisorClientKerp());
-        //fill 
-    
-        //webSocket conectado
-         connection.start();
-         //inicio de interfaz 
-         VisorClientKerp ventana = new VisorClientKerp();
-        ventana.setVisible(true);
-            fill.start();
+       
+        connection.setPriority(1);
+        connection.start();
+       
+        fill.start();
+         
+      
       
 
     }

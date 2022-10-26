@@ -491,46 +491,9 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
 
 
     
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisorClientKerp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisorClientKerp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisorClientKerp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisorClientKerp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-
-              
-                new VisorClientKerp().setVisible(true);
-            }
-        });
-    }
     
-    public Cliente getCliente(String message){
-
-     return null;
-    
-    }
+  
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -572,10 +535,7 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     // End of variables declaration//GEN-END:variables
 
  
-    public void fillCard(){
-
-    }
-
+  
     @Override
     public void run() {
      try {
@@ -585,12 +545,17 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
      }
        String json = WebSocket.getJson();
         cliente = new Gson().fromJson(json, Cliente.class);
-        prueba.setText(cliente.getDireccion());
-        correo.setText(cliente.getCorreo());
-        cedula.setText(cliente.getCedulaRuc());
-        nombre.setText(cliente.getNombre());
-   
-        System.out.println(cliente.getNombre());
+        System.out.println(cliente);
+        
+        VisorClientKerp ventana = new VisorClientKerp();
+        ventana.nombre.setText(cliente.getNombre());
+        ventana.cedula.setText(cliente.getCedulaRuc());
+        ventana.correo.setText(cliente.getCorreo());
+        ventana.direccion.setText(cliente.getDireccion());
+        System.out.println(cliente.getCedulaRuc());
+        ventana.setVisible(true);
+        
+  
     }
 
   
