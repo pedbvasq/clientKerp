@@ -15,7 +15,7 @@ public class ClienteKerp  {
         
     
         WebSocket connection = new WebSocket();
-        Thread fill = new Thread(new VisorClientKerp());
+       Thread fill = new Thread(new VisorClientKerp());
        
         connection.setPriority(1);
         connection.start();

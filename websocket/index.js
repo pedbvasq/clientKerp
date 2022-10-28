@@ -16,7 +16,10 @@ wss.on("connection", function connection(ws) {
 
   ws.on("message", function incoming(message) {
     console.log("recibido por el servidor : " + message);
-    ws.send("got " + message);
+    const jsonClient = fs.readFileSync("cliente2.json", "utf-8");
+    const clientes = JSON.parse(jsonClient);
+    console.log("new cliente connect");
+    ws.send(JSON.stringify(clientes));
   });
 });
 

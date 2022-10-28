@@ -1,5 +1,12 @@
-const WebSocket = require("ws");
-const ws = new WebSocket("localhost:3000");
-ws.on("open", function open() {
-  ws.on("message", function message(data) {});
+const socket = new WebSocket("ws://localhost:3000");
+socket.addEventListener("open", function (event) {
+  console.log("conectado");
 });
+
+socket.addEventListener("message", function (event) {
+  console.log("mensaje desde el servidor " + event.data);
+});
+
+function enviar() {
+  socket.send("hola desde el cliente");
+}

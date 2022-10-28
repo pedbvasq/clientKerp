@@ -1,11 +1,20 @@
 package clientekerp;
 
-import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
@@ -14,7 +23,8 @@ public class WebSocket extends Thread{
 
 //variables
     private static String json;
-
+    private Set<Session> sessions = new HashSet<>();
+    List<String> listMesages = new ArrayList();
     public static String getJson() {
         return json;
     }
@@ -27,20 +37,26 @@ public class WebSocket extends Thread{
 
   
 
- 
-
-   
 
 //message
     @OnMessage
-    public  void onMessage(String message) {
+    public  void onMessage(String message,Session session) {
  
-
-        System.out.println(message);
-        json = message;
+        System.out.println("el mensaje es " + message);
+        
+       json = message;
        
         
 
+    }
+   
+    @OnOpen
+    public void onOpen(Session session,  EndpointConfig config){
+        try {
+            session.getBasicRemote().sendText("conexion exitosa");
+        } catch (IOException ex) {
+            
+        }
     }
 
 //signal
@@ -48,6 +64,7 @@ public class WebSocket extends Thread{
         synchronized (waitLock) {
             try {
                 waitLock.wait();
+                System.out.println(waitLock);
                
             } catch (InterruptedException e) {
             }
