@@ -6,6 +6,7 @@ package clientekerp;
 
 import static clientekerp.WebSocket.cliente;
 import com.google.gson.Gson;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 
 /**
  *
@@ -31,19 +33,31 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
  private Cliente cl ;
 
     public VisorClientKerp() {
-  
+        try {
+    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+        System.out.print(info.getName());
+        if ("Windows Classic".equals(info.getName())) {
+            UIManager.setLookAndFeel(info.getClassName());
+            //break;
+        }
+    }
+} catch (Exception e) {
+    // If Nimbus is not available, you can set the GUI to another look and feel.
+}
+        getContentPane().setBackground(Color.WHITE);
         
      //LOGOS   
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.jpg")).getImage());
      
     
 
-        
-        ImageIcon  log1 = new javax.swing.ImageIcon(getClass().getResource("/img/logo1.png"));
+   
+        ImageIcon  log1 = new javax.swing.ImageIcon(getClass().getResource("/img/Kerp.jpg"));
         Icon icon1 = new ImageIcon(log1.getImage().getScaledInstance(logo1.getWidth(),logo1.getHeight(),Image.SCALE_DEFAULT));
         logo1.setIcon(icon1);
         
-        ImageIcon  log2 = new javax.swing.ImageIcon(getClass().getResource("/img/logo2.jpg"));
+        ImageIcon  log2 = new javax.swing.ImageIcon(getClass().getResource("/img/patron.jpg"));
         Icon icon2 = new ImageIcon(log2.getImage().getScaledInstance(logo2.getWidth(),logo2.getHeight(),Image.SCALE_DEFAULT));
         logo2.setIcon(icon2);
        tableClient.setDefaultRenderer(Object.class, new TableRender());
@@ -57,7 +71,7 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     //BOTONES
         Timer timer = new Timer(5000,new ActionListener(){
            public void actionPerformed(ActionEvent e ){
-               ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/messi"+cont+".png"));
+               ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/item"+cont+".jpg"));
                Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(),img.getHeight(),Image.SCALE_DEFAULT));
                img.setIcon(icon);
                System.out.println("automatico " + cont);
@@ -78,10 +92,11 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
 
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableClient = new javax.swing.JTable();
-        jLayeredPane3 = new javax.swing.JLayeredPane();
+        card = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -99,7 +114,6 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
         img = new javax.swing.JLabel();
         btnDer = new javax.swing.JToggleButton();
         btnIzq = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -108,44 +122,57 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         logo2 = new javax.swing.JLabel();
         logo1 = new javax.swing.JLabel();
-        prueba = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
         jLabel17.setText("....");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("$0.00");
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 153, 153));
+
+        tableClient.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         tableClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Ejm", "1", "2", null, "3", "4"},
-                {"Ejm2", "1", "1", "2", "4", "5"},
-                {"Ejm3", "4", "5", "6", "7", "7"},
-                {"Ejem4", "7", "6", "6", "6", "6"},
-                {"Ejem5", "5", null, "6", "7", "6"},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {"Hamburguesa", "1", "$3.00", "$3.00"},
+                {"Papas", "1", "$2.00", "$2.00"},
+                {"Soda", "4", "$1.00", "$4.00"},
+                {"Pizza", "7", "$6.00", "$4.00"},
+                {"Emparedado", "1", "$3.00", "$3.00"},
+                {"Carne", "3", "$3.00", "$9.00"},
+                {"Leche", "3", "$1.50", "$4.50"},
+                {"Seco", "3", "$2.50", "$7.50"},
+                {"Combo jr", "4", "$5.00", "$20"},
+                {"Combo sr", "5", "$10.00", "$50.00"}
             },
             new String [] {
-                "Nombre", "Title 2", "Cantidad", "Des", "IVA", "Total"
+                "Item", "Cantidad", "Precio", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableClient.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(tableClient);
         tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tableClient.getColumnModel().getColumnCount() > 0) {
-            tableClient.getColumnModel().getColumn(0).setHeaderValue("Nombre");
-            tableClient.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            tableClient.getColumnModel().getColumn(2).setHeaderValue("Cantidad");
-            tableClient.getColumnModel().getColumn(3).setHeaderValue("Des");
-            tableClient.getColumnModel().getColumn(4).setHeaderValue("IVA");
-            tableClient.getColumnModel().getColumn(5).setHeaderValue("Total");
+            tableClient.getColumnModel().getColumn(0).setResizable(false);
+            tableClient.getColumnModel().getColumn(1).setResizable(false);
+            tableClient.getColumnModel().getColumn(2).setResizable(false);
+            tableClient.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -162,112 +189,123 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jLayeredPane3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 102), null));
+        card.setBackground(new java.awt.Color(255, 255, 255));
+        card.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 102), null));
 
-        jLabel2.setText("Nombre:");
+        jLabel2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel2.setText("Dirección:");
 
-        jLabel3.setText("Cedula/ruc:");
+        jLabel3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel3.setText("Cédula/rúc:");
 
-        jLabel4.setText("Direccion:");
+        jLabel4.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel4.setText("Nombre:");
 
+        jLabel5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel5.setText("Correo:");
 
-        jLayeredPane3.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jSeparator3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jSeparator4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jSeparator5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(direccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(correo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(cedula, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jSeparator3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jSeparator4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(jSeparator5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(direccion, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(correo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        card.setLayer(cedula, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
-        jLayeredPane3.setLayout(jLayeredPane3Layout);
-        jLayeredPane3Layout.setHorizontalGroup(
-            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane3Layout.createSequentialGroup()
+        javax.swing.GroupLayout cardLayout = new javax.swing.GroupLayout(card);
+        card.setLayout(cardLayout);
+        cardLayout.setHorizontalGroup(
+            cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardLayout.createSequentialGroup()
+                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cardLayout.createSequentialGroup()
                         .addGap(77, 77, 77)
-                        .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator4)
-                            .addComponent(jSeparator3)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane3Layout.createSequentialGroup()
-                        .addContainerGap(19, Short.MAX_VALUE)
-                        .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                        .addComponent(jSeparator3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(cardLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(cardLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(26, 26, 26)
-                                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(cardLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator4)))
+                            .addGroup(cardLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jSeparator1)))))
+                                .addGap(18, 18, 18)
+                                .addComponent(jSeparator1))
+                            .addComponent(jLabel3)
+                            .addGroup(cardLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(cardLayout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
+                                        .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(cardLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(19, 19, 19))
-            .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane3Layout.createSequentialGroup()
+            .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cardLayout.createSequentialGroup()
                     .addContainerGap(96, Short.MAX_VALUE)
                     .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(73, 73, 73)))
         );
-        jLayeredPane3Layout.setVerticalGroup(
-            jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane3Layout.createSequentialGroup()
+        cardLayout.setVerticalGroup(
+            cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(jLabel4)
-                    .addComponent(direccion))
-                .addGap(1, 1, 1)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(cardLayout.createSequentialGroup()
+                        .addComponent(direccion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(12, 12, 12)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cedula))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(correo))
-                .addGap(1, 1, 1)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane3Layout.createSequentialGroup()
+                .addComponent(cedula)
+                .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cardLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5))
+                    .addGroup(cardLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(correo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
+            .addGroup(cardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cardLayout.createSequentialGroup()
                     .addGap(85, 85, 85)
                     .addComponent(nombre)
                     .addContainerGap(137, Short.MAX_VALUE)))
         );
 
+        jLayeredPane4.setBackground(java.awt.Color.white);
         jLayeredPane4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLayeredPane4.setForeground(new java.awt.Color(51, 255, 0));
 
         img.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -310,7 +348,7 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
                         .addGap(217, 217, 217)
                         .addComponent(btnIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jLayeredPane4Layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
+                        .addGap(213, 213, 213)
                         .addComponent(btnDer, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jLayeredPane4Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -320,24 +358,28 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
 
         btnIzq.getAccessibleContext().setAccessibleName("");
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel1.setText("Cliente");
-
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel7.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel7.setText("Subtotal:");
 
-        jLabel8.setText("Sub-Iva:");
+        jLabel8.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel8.setText("IVA:");
 
+        jLabel9.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel9.setText("Descuento:");
 
-        jLabel10.setText("Subt-dres:");
-
-        jLabel11.setText("IVA:");
-
-        jLabel12.setText("sprev:");
-
+        jLabel13.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel13.setText("TOTAL:");
+
+        jLabel15.setText("$137.00");
+
+        jLabel16.setText("$16.44");
+
+        jLabel18.setText("$0.00");
+
+        jLabel20.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel20.setText("$153.44");
 
         jLayeredPane2.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -346,6 +388,11 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
         jLayeredPane2.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel18, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel20, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -354,33 +401,66 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13))
-                .addContainerGap(61, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel18))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12)))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel14))))
+                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel20)))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
-            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5))))
         );
 
         logo2.setText("jLabel14");
@@ -389,64 +469,47 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
         logo1.setText("jLabel14");
         logo1.setBorder(new javax.swing.border.MatteBorder(null));
 
-        prueba.setText("jLabel14");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(prueba)
-                                .addGap(103, 103, 103)
-                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(280, 280, 280))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(prueba))))
+                            .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -462,7 +525,7 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
              cont++;
         }
   
-            ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/messi"+cont+".png"));
+            ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/item"+cont+".jpg"));
             Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(),img.getHeight(),Image.SCALE_DEFAULT));
             img.setIcon(icon);
             System.out.println("boton derecho " +cont);
@@ -480,7 +543,7 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
          cont--;
          }
          
-            ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/messi"+cont+".png"));
+            ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/item"+cont+".jpg"));
             Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(),img.getHeight(),Image.SCALE_DEFAULT));
             img.setIcon(icon);
             System.out.println("boton izquierdo" + cont);
@@ -499,17 +562,23 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnDer;
     private javax.swing.JToggleButton btnIzq;
+    private javax.swing.JLayeredPane card;
     private javax.swing.JLabel cedula;
     private javax.swing.JLabel correo;
     private javax.swing.JLabel direccion;
     private javax.swing.JLabel img;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -518,7 +587,6 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -530,7 +598,6 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
     private javax.swing.JLabel nombre;
-    private javax.swing.JLabel prueba;
     private javax.swing.JTable tableClient;
     // End of variables declaration//GEN-END:variables
 
@@ -548,10 +615,10 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
         System.out.println(cliente);
         
         VisorClientKerp ventana = new VisorClientKerp();
-        ventana.nombre.setText(cliente.getNombre());
+        ventana.nombre.setText(cliente.getDireccion());
         ventana.cedula.setText(cliente.getCedulaRuc());
         ventana.correo.setText(cliente.getCorreo());
-        ventana.direccion.setText(cliente.getDireccion());
+        ventana.direccion.setText(cliente.getNombre());
         System.out.println(cliente.getCedulaRuc());
         ventana.setVisible(true);
         

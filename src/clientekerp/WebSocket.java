@@ -44,6 +44,7 @@ public class WebSocket extends Thread{
  
         System.out.println("el mensaje es " + message);
         
+        
        json = message;
        
         
@@ -52,12 +53,10 @@ public class WebSocket extends Thread{
    
     @OnOpen
     public void onOpen(Session session,  EndpointConfig config){
-        try {
-            session.getBasicRemote().sendText("conexion exitosa");
-        } catch (IOException ex) {
-            
-        }
+        
     }
+    
+    
 
 //signal
     private static void wait4TerminateSignal() {

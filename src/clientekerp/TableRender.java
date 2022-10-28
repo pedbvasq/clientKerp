@@ -19,7 +19,7 @@ private Component componente;
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
      
         componente = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    if(row%2==0){  componente.setBackground(Color.gray);}
+    if(row%2==0){  componente.setBackground(Color.CYAN);}
     else{componente.setBackground(Color.white);}
     
     if(isSelected){componente.setBackground(Color.yellow);}
