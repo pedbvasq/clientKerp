@@ -23,69 +23,60 @@ import javax.swing.UIManager;
  *
  * @author Christian
  */
-public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
+public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form clientKerp
      */
- 
- int cont = 1;
- private Cliente cl ;
+    int cont = 1;
+    private Cliente cl;
 
     public VisorClientKerp() {
         try {
-    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-        System.out.print(info.getName());
-        if ("Windows Classic".equals(info.getName())) {
-            UIManager.setLookAndFeel(info.getClassName());
-            //break;
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                System.out.print(info.getName());
+                if ("Windows Classic".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    //break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-    }
-} catch (Exception e) {
-    // If Nimbus is not available, you can set the GUI to another look and feel.
-}
         getContentPane().setBackground(Color.WHITE);
-        
-     //LOGOS   
+
+        //LOGOS   
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/img/logo.jpg")).getImage());
-     
-    
 
-   
-        ImageIcon  log1 = new javax.swing.ImageIcon(getClass().getResource("/img/Kerp.jpg"));
-        Icon icon1 = new ImageIcon(log1.getImage().getScaledInstance(logo1.getWidth(),logo1.getHeight(),Image.SCALE_DEFAULT));
+        ImageIcon log1 = new javax.swing.ImageIcon(getClass().getResource("/img/Kerp.jpg"));
+        Icon icon1 = new ImageIcon(log1.getImage().getScaledInstance(logo1.getWidth(), logo1.getHeight(), Image.SCALE_DEFAULT));
         logo1.setIcon(icon1);
-        
-        ImageIcon  log2 = new javax.swing.ImageIcon(getClass().getResource("/img/patron.jpg"));
-        Icon icon2 = new ImageIcon(log2.getImage().getScaledInstance(logo2.getWidth(),logo2.getHeight(),Image.SCALE_DEFAULT));
+
+        ImageIcon log2 = new javax.swing.ImageIcon(getClass().getResource("/img/patron.jpg"));
+        Icon icon2 = new ImageIcon(log2.getImage().getScaledInstance(logo2.getWidth(), logo2.getHeight(), Image.SCALE_DEFAULT));
         logo2.setIcon(icon2);
-       tableClient.setDefaultRenderer(Object.class, new TableRender());
-       
-       //card
-      
+        tableClient.setDefaultRenderer(Object.class, new TableRender());
 
-       
+        //card
+        //BOTONES
+        Timer timer = new Timer(5000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ImageIcon pic = new javax.swing.ImageIcon(getClass().getResource("/img/item" + cont + ".jpg"));
+                Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_DEFAULT));
+                img.setIcon(icon);
+                System.out.println("automatico " + cont);
 
-       
-    //BOTONES
-        Timer timer = new Timer(5000,new ActionListener(){
-           public void actionPerformed(ActionEvent e ){
-               ImageIcon  pic = new javax.swing.ImageIcon(getClass().getResource("/img/item"+cont+".jpg"));
-               Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(),img.getHeight(),Image.SCALE_DEFAULT));
-               img.setIcon(icon);
-               System.out.println("automatico " + cont);
-               
-     
-               cont++;
-               if(cont==4) cont=1;
-               
-           }
-       });
+                cont++;
+                if (cont == 4) {
+                    cont = 1;
+                }
+
+            }
+        });
         timer.start();
     }
-    
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -465,12 +456,6 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     }// </editor-fold>//GEN-END:initComponents
 
 
-    
-
-    
-  
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane card;
     private javax.swing.JLabel ced;
@@ -510,38 +495,23 @@ public class VisorClientKerp extends javax.swing.JFrame  implements Runnable{
     private javax.swing.JTable tableClient;
     // End of variables declaration//GEN-END:variables
 
- 
-  
     @Override
     public void run() {
-     try {
-         Thread.sleep(3000);
-     } catch (InterruptedException ex) {
-         Logger.getLogger(VisorClientKerp.class.getName()).log(Level.SEVERE, null, ex);
-     }
-       String json = WebSocket.getJson();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(VisorClientKerp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String json = WebSocket.getJson();
+
         cliente = new Gson().fromJson(json, Cliente.class);
         System.out.println(cliente);
-        
-        VisorClientKerp ventana = new VisorClientKerp();
-       
-        ventana.name.setText(cliente.getDireccion());
-        ventana.ced.setText(cliente.getCedulaRuc());
-        ventana.email.setText(cliente.getCorreo());
-        ventana.dir.setText(cliente.getNombre());
-        System.out.println(cliente.getCedulaRuc());
 
-        ventana.setVisible(true);
-        
-  
+        ClienteKerp.ventana.name.setText(cliente.getDireccion());
+        ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
+        ClienteKerp.ventana.email.setText(cliente.getCorreo());
+        ClienteKerp.ventana.dir.setText(cliente.getNombre());
+
     }
 
-  
-
-
-
 }
-
-
-
-

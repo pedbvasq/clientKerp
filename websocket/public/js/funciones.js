@@ -4,7 +4,6 @@ socket.addEventListener("open", function (event) {
 });
 
 socket.addEventListener("message", function (event) {
-  console.log("chaor");
   console.log("mensaje desde el servidor " + event.data);
 });
 

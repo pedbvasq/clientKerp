@@ -1,6 +1,7 @@
 package clientekerp;
 
 
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.EndpointConfig;
@@ -23,8 +23,7 @@ public class WebSocket extends Thread{
 
 //variables
     private static String json;
-    private Set<Session> sessions = new HashSet<>();
-    List<String> listMesages = new ArrayList();
+
     public static String getJson() {
         return json;
     }
@@ -41,18 +40,26 @@ public class WebSocket extends Thread{
 //message
     @OnMessage
     public  void onMessage(String message,Session session) {
- 
-        System.out.println("el mensaje es " + message);
-        
-        
-       json = message;
+        try {
+            Thread.sleep(1000);
+
+            System.out.println("el mensaje es " + message);
+            json = message;
+            Thread fill = new Thread(new VisorClientKerp());
+             fill.start();
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(WebSocket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
        
         
-
     }
-   
+    
     @OnOpen
     public void onOpen(Session session,  EndpointConfig config){
+       
         
     }
     
@@ -79,8 +86,7 @@ public class WebSocket extends Thread{
         Session session = null;
          
         try {
-          
-            //Tyrus is plugged via ServiceLoader API. See notes above
+
             container = ContainerProvider.getWebSocketContainer();
            
             session = container.connectToServer(WebSocket.class, URI.create("ws://localhost:3000/"));
