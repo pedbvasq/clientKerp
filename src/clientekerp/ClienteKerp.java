@@ -16,7 +16,7 @@ static VisorClientKerp  ventana = new VisorClientKerp();
         
       
         WebSocket connection = new WebSocket();
-       ventana.setVisible(true);
+      ventana.setVisible(true);
         
         connection.setPriority(1);
         connection.start();

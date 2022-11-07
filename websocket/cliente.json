@@ -1,6 +1,68 @@
+
+[
 {
     "nombre":"TECNOLOGICA KIMERASOFT-EC SA",
     "cedulaRuc":"0993042080001",
     "correo":"contacto@kimerasoft-ec.com",
     "direccion":"Alborada 6ta etapa mz 644 villa #1"
+},
+{
+    "item":"Hamburguesa",
+    "cantidad":"1",
+    "precio":"$3.00",
+    "total":"300"
+},
+{
+    "item":"Papa",
+    "cantidad":"2",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Pizza",
+    "cantidad":"3",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Soda",
+    "cantidad":"4",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Emparedado",
+    "cantidad":"5",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Carne",
+    "cantidad":"6",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Leche",
+    "cantidad":"7",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Combo jr",
+    "cantidad":"8",
+    "precio":"$3.00",
+    "total":"300"
+},{
+    "item":"Combo Mr",
+    "cantidad":"9",
+    "precio":"$3.00",
+    "total":"300"
+},
+{
+    "item":"Rancherito",
+    "cantidad":"10",
+    "precio":"$3.00",
+    "total":"300"
+},
+{
+    "subtotal":"$20",
+    "iva":"$34",
+    "descuento":"$3.00",
+    "total":"300"
 }
+]

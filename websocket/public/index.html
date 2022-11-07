@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="js/estilos.css">
     <script type="text/javascript">
         const ws = new WebSocket('ws://localhost:3000');
 
@@ -20,11 +21,9 @@
 </head>
 
 <body>
-    <h1>Chat</h1>
-    <div>
-        <input id="message" placeholder="Message">
+
+<textarea name="textarea"  id="message" rows="10" cols="50">Write something here</textarea>
         <button id="send" disabled="true">Send</button>
-    </div>
     <div id="messages">
     </div>
 </body>

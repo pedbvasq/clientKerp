@@ -43,7 +43,7 @@ public class WebSocket extends Thread{
         try {
             Thread.sleep(1000);
 
-            System.out.println("el mensaje es " + message);
+       
             json = message;
             Thread fill = new Thread(new VisorClientKerp());
              fill.start();
