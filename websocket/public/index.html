@@ -12,6 +12,12 @@
             document.querySelector('#send').addEventListener('click', function () {
                 ws.send(document.querySelector('#message').value);
             });
+            document.querySelector('#clear').addEventListener('click', function () {
+                ws.send("clear");
+            });
+             document.querySelector('#venta').addEventListener('click', function () {
+                ws.send("venta");
+            });
         };
 
         ws.onmessage = function (msg) {
@@ -24,6 +30,9 @@
 
 <textarea name="textarea"  id="message" rows="10" cols="50">Write something here</textarea>
         <button id="send" disabled="true">Send</button>
+        <button id="clear" >clear</button>
+        <button id="venta">venta</button>
+
     <div id="messages">
     </div>
 </body>

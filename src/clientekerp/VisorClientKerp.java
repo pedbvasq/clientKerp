@@ -12,13 +12,17 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -376,38 +380,34 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         tableClient.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         tableClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Hamburguesa", "1", "$3.00", "$3.00"},
-                {"Papas", "1", "$2.00", "$2.00"},
-                {"Soda", "4", "$1.00", "$4.00"},
-                {"Pizza", "7", "$6.00", "$4.00"},
-                {"Emparedado", "1", "$3.00", "$3.00"},
-                {"Carne", "3", "$3.00", "$9.00"},
-                {"Leche", "3", "$1.50", "$4.50"},
-                {"Seco", "3", "$2.50", "$7.50"},
-                {"Combo jr", "4", "$5.00", "$20"},
-                {"Combo sr", "5", "$10.00", "$50.00"}
+                {"", "", "", "$3.00"},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""},
+                {"", "", "", ""}
             },
             new String [] {
                 "Item", "Cantidad", "Precio", "Total"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         tableClient.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableClient.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(tableClient);
         tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tableClient.getColumnModel().getColumnCount() > 0) {
             tableClient.getColumnModel().getColumn(0).setResizable(false);
+            tableClient.getColumnModel().getColumn(0).setHeaderValue("Item");
             tableClient.getColumnModel().getColumn(1).setResizable(false);
+            tableClient.getColumnModel().getColumn(1).setHeaderValue("Cantidad");
             tableClient.getColumnModel().getColumn(2).setResizable(false);
+            tableClient.getColumnModel().getColumn(2).setHeaderValue("Precio");
             tableClient.getColumnModel().getColumn(3).setResizable(false);
+            tableClient.getColumnModel().getColumn(3).setHeaderValue("Total");
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -428,7 +428,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -500,25 +500,47 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         } catch (InterruptedException ex) {
 
         }
+
         String json = WebSocket.getJson();
-        try {
+        if (json.equals("clear")) {
+            ClienteKerp.ventana.name.setText("");
+            ClienteKerp.ventana.ced.setText("");
+            ClienteKerp.ventana.email.setText("");
+            ClienteKerp.ventana.dir.setText("");
+            ClienteKerp.ventana.sub.setText("");
+            ClienteKerp.ventana.iva.setText("");
+            ClienteKerp.ventana.descuento.setText("");
+            ClienteKerp.ventana.total.setText("");
+        }else if(json.equals("venta")) {
+            JOptionPane.showMessageDialog(this, "venta realizada..!!!!");
             
-            JSONArray jsonArray = new JSONArray(json);
-            JSONObject jsonObject = jsonArray.getJSONObject(0); 
-            Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
-            ClienteKerp.ventana.name.setText(cliente.getDireccion());
-            ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
-            ClienteKerp.ventana.email.setText(cliente.getCorreo());
-            ClienteKerp.ventana.dir.setText(cliente.getNombre());
+        }else{
+        try {
 
-            JSONObject obj  = jsonArray.getJSONObject(11);
-            Factura ft = new Factura(obj.getString("subtotal"),obj.getString("iva"),obj.getString("descuento"),obj.getString("total"));
-            ClienteKerp.ventana.sub.setText(ft.getSubtotal());
-            ClienteKerp.ventana.iva.setText(ft.getIva());
-            ClienteKerp.ventana.descuento.setText(ft.getDescuento());
-            ClienteKerp.ventana.total.setText(ft.getTotal());
-        } catch (JSONException ex) {
+                JSONArray jsonArray = new JSONArray(json);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
+                ClienteKerp.ventana.name.setText(cliente.getDireccion());
+                ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
+                ClienteKerp.ventana.email.setText(cliente.getCorreo());
+                ClienteKerp.ventana.dir.setText(cliente.getNombre());
 
+                JSONObject obj = jsonArray.getJSONObject(11);
+                Factura ft = new Factura(obj.getString("subtotal"), obj.getString("iva"), obj.getString("descuento"), obj.getString("total"));
+                ClienteKerp.ventana.sub.setText(ft.getSubtotal());
+                ClienteKerp.ventana.iva.setText(ft.getIva());
+                ClienteKerp.ventana.descuento.setText(ft.getDescuento());
+                ClienteKerp.ventana.total.setText(ft.getTotal());
+                ArrayList<Item> items = new ArrayList<>();
+                for (int i = 1; i < 10; i++) {
+                    JSONObject oj = jsonArray.getJSONObject(i);
+                    Item item = new Item(oj.getString("item"), oj.getString("cantidad"), oj.getString("precio"), oj.getString("total"));
+                    items.add(item);
+                }
+
+            } catch (JSONException ex) {
+
+            }
         }
 
     }

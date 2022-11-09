@@ -3,11 +3,6 @@ package clientekerp;
 
 import javax.websocket.ClientEndpoint;
 
-
-
-
-
-
 @ClientEndpoint
 public class ClienteKerp  {
 static VisorClientKerp  ventana = new VisorClientKerp();
