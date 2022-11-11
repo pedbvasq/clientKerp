@@ -4,25 +4,16 @@
  */
 package clientekerp;
 
-import static clientekerp.WebSocket.cliente;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +28,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
      * Creates new form clientKerp
      */
     int cont = 1;
+    static ArrayList<Item> listaItems = new ArrayList<Item>();
 
     public VisorClientKerp() {
         try {
@@ -65,9 +57,8 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         logo2.setIcon(icon2);
         tableClient.setDefaultRenderer(Object.class, new TableRender());
 
-        //card
-        //BOTONES
         Timer timer = new Timer(5000, new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 ImageIcon pic = new javax.swing.ImageIcon(getClass().getResource("/img/item" + cont + ".jpg"));
                 Icon icon = new ImageIcon(pic.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_DEFAULT));
@@ -380,34 +371,46 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         tableClient.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         tableClient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", "", "", "$3.00"},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""},
-                {"", "", "", ""}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Item", "Cantidad", "Precio", "Total"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tableClient.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableClient.setCellSelectionEnabled(true);
+        tableClient.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tableClient);
-        tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (tableClient.getColumnModel().getColumnCount() > 0) {
             tableClient.getColumnModel().getColumn(0).setResizable(false);
-            tableClient.getColumnModel().getColumn(0).setHeaderValue("Item");
             tableClient.getColumnModel().getColumn(1).setResizable(false);
-            tableClient.getColumnModel().getColumn(1).setHeaderValue("Cantidad");
             tableClient.getColumnModel().getColumn(2).setResizable(false);
-            tableClient.getColumnModel().getColumn(2).setHeaderValue("Precio");
             tableClient.getColumnModel().getColumn(3).setResizable(false);
-            tableClient.getColumnModel().getColumn(3).setHeaderValue("Total");
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -489,7 +492,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel name;
     private javax.swing.JLabel nombre;
     private javax.swing.JLabel sub;
-    private javax.swing.JTable tableClient;
+    private volatile javax.swing.JTable tableClient;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 
@@ -511,11 +514,24 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             ClienteKerp.ventana.iva.setText("");
             ClienteKerp.ventana.descuento.setText("");
             ClienteKerp.ventana.total.setText("");
-        }else if(json.equals("venta")) {
+            int acum = 0;
+            for (int i = 0; i < listaItems.size(); i++) {
+
+                ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                acum++;
+                ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                acum++;
+                ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                acum++;
+                ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                acum = 0;
+            }
+            listaItems.clear();
+        } else if (json.equals("venta")) {
             JOptionPane.showMessageDialog(this, "venta realizada..!!!!");
-            
-        }else{
-        try {
+
+        } else {
+            try {
 
                 JSONArray jsonArray = new JSONArray(json);
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
@@ -531,12 +547,28 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 ClienteKerp.ventana.iva.setText(ft.getIva());
                 ClienteKerp.ventana.descuento.setText(ft.getDescuento());
                 ClienteKerp.ventana.total.setText(ft.getTotal());
-                ArrayList<Item> items = new ArrayList<>();
-                for (int i = 1; i < 10; i++) {
+
+                for (int i = 1; i < 11; i++) {
                     JSONObject oj = jsonArray.getJSONObject(i);
                     Item item = new Item(oj.getString("item"), oj.getString("cantidad"), oj.getString("precio"), oj.getString("total"));
-                    items.add(item);
+                    listaItems.add(item);
+
                 }
+                int acum = 0;
+                for (int i = 0; i < listaItems.size(); i++) {
+
+                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getNombre(), i, acum);
+                    acum++;
+                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getCantidad(), i, acum);
+                    acum++;
+                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getPrecio(), i, acum);
+                    acum++;
+                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getTotal(), i, acum);
+                    acum = 0;
+
+                }
+                listaItems.clear();
+                
 
             } catch (JSONException ex) {
 
