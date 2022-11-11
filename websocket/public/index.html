@@ -15,13 +15,15 @@
             document.querySelector('#clear').addEventListener('click', function () {
                 ws.send("clear");
             });
-             document.querySelector('#venta').addEventListener('click', function () {
-                ws.send("venta");
+
+             document.querySelector('#btnVenta').addEventListener('click', function () {
+                ws.send(document.querySelector('#venta').value);
             });
         };
 
         ws.onmessage = function (msg) {
             document.querySelector('#messages').innerHTML += `<div>${msg.data}</div>`;
+            document.querySelector('#mess').innerHTML += `<div>${msg.data}</div>`;
         };
     </script>
 </head>
@@ -29,9 +31,10 @@
 <body>
 
 <textarea name="textarea"  id="message" rows="10" cols="50">Write something here</textarea>
-        <button id="send" disabled="true">Send</button>
-        <button id="clear" >clear</button>
-        <button id="venta">venta</button>
+<textarea name="textarea" id="venta" rows="10" cols="50">Write something here</textarea>
+<button id="send" disabled="true">Send</button>
+<button id="clear" >clear</button>
+<button id="btnVenta">venta</button>
 
     <div id="messages">
     </div>

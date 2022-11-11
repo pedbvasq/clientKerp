@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package clientekerp;
 
 import java.awt.Color;
@@ -11,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -18,19 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- *
- * @author Christian
- */
+
 public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
-    /**
-     * Creates new form clientKerp
-     */
     int cont = 1;
     static ArrayList<Item> listaItems = new ArrayList<Item>();
     static int sz = 0;
+
     public VisorClientKerp() {
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 
@@ -81,6 +75,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         card = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -114,6 +109,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         logo1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableClient = new javax.swing.JTable();
+        conection = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -121,17 +117,33 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
         jLabel19.setText("$0.00");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         card.setBackground(new java.awt.Color(255, 255, 255));
         card.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 51, 102), null));
+        card.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                cardHierarchyChanged(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel2.setText("Dirección:");
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel3.setText("Cédula/rúc:");
+        jLabel3.setText("Cédula/ruc:");
 
         name.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -413,25 +425,33 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             tableClient.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        conection.setForeground(new java.awt.Color(255, 0, 51));
+        conection.setText("Desconectado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(logo1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(conection)))
+                .addGap(9, 9, 9))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,11 +462,13 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                     .addComponent(logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(conection)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(card)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -456,11 +478,16 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cardHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_cardHierarchyChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cardHierarchyChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane card;
     private javax.swing.JLabel ced;
     private javax.swing.JLabel cedula;
+    private static javax.swing.JLabel conection;
     private javax.swing.JLabel correo;
     private javax.swing.JLabel descuento;
     private javax.swing.JLabel dir;
@@ -485,6 +512,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel logo1;
@@ -498,8 +526,9 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
+
         try {
-            Thread.sleep(2000);
+            Thread.sleep(100);
         } catch (InterruptedException ex) {
 
         }
@@ -515,8 +544,9 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             ClienteKerp.ventana.descuento.setText("");
             ClienteKerp.ventana.total.setText("");
             int acum = 0;
-            for (int i = 0; i < sz; i++) {
 
+            for (int i = 0; i < sz; i++) {
+                System.out.println("pantalla Limpiada");
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum++;
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
@@ -526,9 +556,10 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum = 0;
             }
-            
+          
+
         } else if (json.equals("venta")) {
-            JOptionPane.showMessageDialog(this, "venta realizada..!!!!");
+           
 
         } else {
             try {
@@ -540,10 +571,11 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     if (jsonObject.names().get(0).toString().equals("correo")) {
-                        System.out.println("entre 1");
                         Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
                         ClienteKerp.ventana.name.setText(cliente.getDireccion());
                         ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
+                        
+                        ClienteKerp.ventana.ced.setAlignmentX(566);
                         ClienteKerp.ventana.email.setText(cliente.getCorreo());
                         ClienteKerp.ventana.dir.setText(cliente.getNombre());
 
@@ -556,7 +588,6 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                         ClienteKerp.ventana.total.setText(ft.getTotal());
 
                     } else if (jsonObject.names().get(0).toString().equals("item")) {
-                        System.out.println("entre3");
 
                         Item item = new Item(jsonObject.getString("item"), jsonObject.getString("cantidad"), jsonObject.getString("precio"), jsonObject.getString("total"));
                         listaItems.add(item);
@@ -565,26 +596,53 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 }
                 int acum = 0;
                 sz = listaItems.size();
-                for (int i = 0; i < listaItems.size(); i++) {
+                System.out.println(sz);
+                for (int i = 0; i < 10; i++) {
+                    System.out.println(i);
+                    if (i > sz-1) {
+                        System.out.println(i);
+                        ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                        acum = 0;
+                    } else {
 
-                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getNombre(), i, acum);
-                    acum++;
-                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getCantidad(), i, acum);
-                    acum++;
-                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getPrecio(), i, acum);
-                    acum++;
-                    ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getTotal(), i, acum);
-                    acum = 0;
+                        ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getNombre(), i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getCantidad(), i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getPrecio(), i, acum);
+                        acum++;
+                        ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getTotal(), i, acum);
+                        acum = 0;
+                    }
 
                 }
                 listaItems.clear();
-                
 
             } catch (JSONException ex) {
-
+                    String[] parts = json.split(",");
+                    if(parts.length==2){
+                         JOptionPane.showMessageDialog(this, json);
+                    }
+                    
+                    
+                    
             }
         }
 
+    }
+
+    public static JLabel getConection() {
+        return conection;
+    }
+
+    public static void setConection(JLabel conection) {
+        VisorClientKerp.conection = conection;
     }
 
 }

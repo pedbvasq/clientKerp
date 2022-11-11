@@ -2,17 +2,15 @@ package clientekerp;
 
 
 
-import java.io.IOException;
+
+import java.awt.Color;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -23,6 +21,7 @@ public class WebSocket extends Thread{
 
 //variables
     private static String json;
+ 
 
     public static String getJson() {
         return json;
@@ -41,7 +40,7 @@ public class WebSocket extends Thread{
     @OnMessage
     public  void onMessage(String message,Session session) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(50);
 
        
             json = message;
@@ -59,10 +58,24 @@ public class WebSocket extends Thread{
     
     @OnOpen
     public void onOpen(Session session,  EndpointConfig config){
-       
+   
+        VisorClientKerp.getConection().setForeground( Color.GREEN);
+       VisorClientKerp.getConection().setText("Conectado");
+    
+    }
+    @OnClose
+    public void onClose(Session session,  EndpointConfig config){
+    
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(WebSocket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         VisorClientKerp.getConection().setText("Desconectado");
+         VisorClientKerp.getConection().setForeground( Color.RED);
+        
         
     }
-    
     
 
 //signal
@@ -70,7 +83,7 @@ public class WebSocket extends Thread{
         synchronized (waitLock) {
             try {
                 waitLock.wait();
-                System.out.println(waitLock);
+          
                
             } catch (InterruptedException e) {
             }
