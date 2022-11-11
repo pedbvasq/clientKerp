@@ -29,7 +29,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
      */
     int cont = 1;
     static ArrayList<Item> listaItems = new ArrayList<Item>();
-
+    static int sz = 0;
     public VisorClientKerp() {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -515,7 +515,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             ClienteKerp.ventana.descuento.setText("");
             ClienteKerp.ventana.total.setText("");
             int acum = 0;
-            for (int i = 0; i < listaItems.size(); i++) {
+            for (int i = 0; i < sz; i++) {
 
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum++;
@@ -526,7 +526,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum = 0;
             }
-            listaItems.clear();
+            
         } else if (json.equals("venta")) {
             JOptionPane.showMessageDialog(this, "venta realizada..!!!!");
 
@@ -534,27 +534,37 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             try {
 
                 JSONArray jsonArray = new JSONArray(json);
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
-                ClienteKerp.ventana.name.setText(cliente.getDireccion());
-                ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
-                ClienteKerp.ventana.email.setText(cliente.getCorreo());
-                ClienteKerp.ventana.dir.setText(cliente.getNombre());
+                System.out.println("");
 
-                JSONObject obj = jsonArray.getJSONObject(11);
-                Factura ft = new Factura(obj.getString("subtotal"), obj.getString("iva"), obj.getString("descuento"), obj.getString("total"));
-                ClienteKerp.ventana.sub.setText(ft.getSubtotal());
-                ClienteKerp.ventana.iva.setText(ft.getIva());
-                ClienteKerp.ventana.descuento.setText(ft.getDescuento());
-                ClienteKerp.ventana.total.setText(ft.getTotal());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                for (int i = 1; i < 11; i++) {
-                    JSONObject oj = jsonArray.getJSONObject(i);
-                    Item item = new Item(oj.getString("item"), oj.getString("cantidad"), oj.getString("precio"), oj.getString("total"));
-                    listaItems.add(item);
+                    if (jsonObject.names().get(0).toString().equals("correo")) {
+                        System.out.println("entre 1");
+                        Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
+                        ClienteKerp.ventana.name.setText(cliente.getDireccion());
+                        ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
+                        ClienteKerp.ventana.email.setText(cliente.getCorreo());
+                        ClienteKerp.ventana.dir.setText(cliente.getNombre());
+
+                    } else if (jsonObject.names().get(2).toString().equals("subtotal")) {
+
+                        Factura ft = new Factura(jsonObject.getString("subtotal"), jsonObject.getString("iva"), jsonObject.getString("descuento"), jsonObject.getString("total"));
+                        ClienteKerp.ventana.sub.setText(ft.getSubtotal());
+                        ClienteKerp.ventana.iva.setText(ft.getIva());
+                        ClienteKerp.ventana.descuento.setText(ft.getDescuento());
+                        ClienteKerp.ventana.total.setText(ft.getTotal());
+
+                    } else if (jsonObject.names().get(0).toString().equals("item")) {
+                        System.out.println("entre3");
+
+                        Item item = new Item(jsonObject.getString("item"), jsonObject.getString("cantidad"), jsonObject.getString("precio"), jsonObject.getString("total"));
+                        listaItems.add(item);
+                    }
 
                 }
                 int acum = 0;
+                sz = listaItems.size();
                 for (int i = 0; i < listaItems.size(); i++) {
 
                     ClienteKerp.ventana.tableClient.setValueAt(listaItems.get(i).getNombre(), i, acum);
