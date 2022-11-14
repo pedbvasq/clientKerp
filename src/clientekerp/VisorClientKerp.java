@@ -392,6 +392,8 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -420,9 +422,13 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (tableClient.getColumnModel().getColumnCount() > 0) {
             tableClient.getColumnModel().getColumn(0).setResizable(false);
+            tableClient.getColumnModel().getColumn(0).setPreferredWidth(100);
             tableClient.getColumnModel().getColumn(1).setResizable(false);
+            tableClient.getColumnModel().getColumn(1).setPreferredWidth(10);
             tableClient.getColumnModel().getColumn(2).setResizable(false);
+            tableClient.getColumnModel().getColumn(2).setPreferredWidth(10);
             tableClient.getColumnModel().getColumn(3).setResizable(false);
+            tableClient.getColumnModel().getColumn(3).setPreferredWidth(10);
         }
 
         conection.setForeground(new java.awt.Color(255, 0, 51));
@@ -596,12 +602,14 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 }
                 int acum = 0;
                 sz = listaItems.size();
+                ClienteKerp.ventana.tableClient.getColumnModel().getColumn(1).setMinWidth(10);
                 System.out.println(sz);
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 12; i++) {
                     System.out.println(i);
                     if (i > sz-1) {
                         System.out.println(i);
                         ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
+                       
                         acum++;
                         ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                         acum++;
