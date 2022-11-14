@@ -44,7 +44,7 @@ public class WebSocket extends Thread{
 
        
             json = message;
-            Thread fill = new Thread(new VisorClientKerp());
+            Thread fill = new Thread(ClienteKerp.ventana);
              fill.start();
             
         } catch (InterruptedException ex) {
@@ -59,8 +59,8 @@ public class WebSocket extends Thread{
     @OnOpen
     public void onOpen(Session session,  EndpointConfig config){
    
-        VisorClientKerp.getConection().setForeground( Color.GREEN);
-       VisorClientKerp.getConection().setText("Conectado");
+        ClienteKerp.ventana.getConection().setForeground( Color.GREEN);
+       ClienteKerp.ventana.getConection().setText("Conectado");
     
     }
     @OnClose
@@ -68,11 +68,12 @@ public class WebSocket extends Thread{
     
         try {
             Thread.sleep(50);
+          
         } catch (InterruptedException ex) {
             Logger.getLogger(WebSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
-         VisorClientKerp.getConection().setText("Desconectado");
-         VisorClientKerp.getConection().setForeground( Color.RED);
+         ClienteKerp.ventana.getConection().setText("Desconectado");
+         ClienteKerp.ventana.getConection().setForeground( Color.RED);
         
         
     }

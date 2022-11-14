@@ -6,7 +6,7 @@ import javax.websocket.ClientEndpoint;
 @ClientEndpoint
 public class ClienteKerp  {
 static VisorClientKerp  ventana = new VisorClientKerp();
-        
+      
     public static void main(String[] args)  {
         
       

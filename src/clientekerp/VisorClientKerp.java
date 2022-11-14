@@ -1,13 +1,16 @@
-
 package clientekerp;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -15,7 +18,6 @@ import javax.swing.UIManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
@@ -30,11 +32,11 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
 
                 if ("Windows Classic".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
-                    //break;
+
                 }
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
+
         }
         getContentPane().setBackground(Color.WHITE);
 
@@ -422,7 +424,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         tableClient.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (tableClient.getColumnModel().getColumnCount() > 0) {
             tableClient.getColumnModel().getColumn(0).setResizable(false);
-            tableClient.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tableClient.getColumnModel().getColumn(0).setPreferredWidth(200);
             tableClient.getColumnModel().getColumn(1).setResizable(false);
             tableClient.getColumnModel().getColumn(1).setPreferredWidth(10);
             tableClient.getColumnModel().getColumn(2).setResizable(false);
@@ -432,7 +434,6 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
         }
 
         conection.setForeground(new java.awt.Color(255, 0, 51));
-        conection.setText("Desconectado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -552,7 +553,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
             int acum = 0;
 
             for (int i = 0; i < sz; i++) {
-                System.out.println("pantalla Limpiada");
+
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum++;
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
@@ -562,16 +563,13 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                 acum = 0;
             }
-          
 
         } else if (json.equals("venta")) {
-           
 
         } else {
             try {
 
                 JSONArray jsonArray = new JSONArray(json);
-                System.out.println("");
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -580,7 +578,7 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                         Cliente cliente = new Cliente(jsonObject.getString("nombre"), jsonObject.getString("cedulaRuc"), jsonObject.getString("correo"), jsonObject.getString("direccion"));
                         ClienteKerp.ventana.name.setText(cliente.getDireccion());
                         ClienteKerp.ventana.ced.setText(cliente.getCedulaRuc());
-                        
+
                         ClienteKerp.ventana.ced.setAlignmentX(566);
                         ClienteKerp.ventana.email.setText(cliente.getCorreo());
                         ClienteKerp.ventana.dir.setText(cliente.getNombre());
@@ -606,10 +604,10 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 System.out.println(sz);
                 for (int i = 0; i < 12; i++) {
                     System.out.println(i);
-                    if (i > sz-1) {
-                        System.out.println(i);
+                    if (i > sz - 1) {
+
                         ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
-                       
+
                         acum++;
                         ClienteKerp.ventana.tableClient.setValueAt("", i, acum);
                         acum++;
@@ -633,13 +631,29 @@ public class VisorClientKerp extends javax.swing.JFrame implements Runnable {
                 listaItems.clear();
 
             } catch (JSONException ex) {
-                    String[] parts = json.split(",");
-                    if(parts.length==2){
-                         JOptionPane.showMessageDialog(this, json);
-                    }
-                    
-                    
-                    
+                String[] parts = json.split(",");
+                JOptionPane message = new JOptionPane();
+
+                if (parts.length == 2) {
+
+                    JOptionPane opt = new JOptionPane(json, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}); // no buttons
+                    final JDialog dlg = opt.createDialog("Vuelva pronto");
+                    dlg.setIconImage(this.getIconImage());
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+                                dlg.dispose();
+
+                            } catch (Throwable th) {
+                                
+                            }
+                        }
+                    }).start();
+                    dlg.setVisible(true);
+
+                }
+
             }
         }
 
